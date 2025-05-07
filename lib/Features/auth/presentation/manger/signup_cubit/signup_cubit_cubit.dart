@@ -26,4 +26,5 @@ class SignupCubit extends Cubit<SignupCubitState> {
       (r) => emit(SignupCubitSuccess(r)),
     );
   }
+
 }

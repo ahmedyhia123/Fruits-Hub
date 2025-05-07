@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:fruits_hub/Core/Helper/on_generate_routes.dart';
-import 'package:fruits_hub/Core/services/Shared_preference.dart';
+import 'package:fruits_hub/Core/services/shared_preference.dart';
 import 'package:fruits_hub/Core/services/custom_bloc_observer.dart';
 import 'package:fruits_hub/Core/services/get_it_service.dart';
 import 'package:fruits_hub/Features/splash/presentation/views/splash_view.dart';
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: [
+      localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

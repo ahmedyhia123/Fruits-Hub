@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fruits_hub/Core/services/Shared_preference.dart';
+import 'package:fruits_hub/Core/services/shared_preference.dart';
 import 'package:fruits_hub/Core/utils/constants.dart';
 import 'package:fruits_hub/Core/utils/styles.dart';
 import 'package:fruits_hub/Features/auth/presentation/views/login_view.dart';
@@ -42,16 +42,16 @@ class PageViewItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SvgPicture.asset(image, height: 300),
-                  SizedBox(height: 64),
+                  const SizedBox(height: 64),
                   title,
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Text(
                       textAlign: TextAlign.center,
                       subTitle,
                       style: Styles.semiBold13.copyWith(
-                        color: Color(0xff4E5556),
+                        color: const Color(0xff4E5556),
                       ),
                     ),
                   ),
@@ -71,7 +71,7 @@ class PageViewItem extends StatelessWidget {
                   },
                   child: Text(
                     'تخط',
-                    style: Styles.regular13.copyWith(color: Color(0xff949D9E)),
+                    style: Styles.regular13.copyWith(color: const Color(0xff949D9E)),
                   ),
                 ),
               ),

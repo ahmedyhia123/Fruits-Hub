@@ -17,21 +17,21 @@ class CustomAppBar extends StatelessWidget {
           child: GestureDetector(
             onTap: onTap,
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               height: 55,
               width: 55,
               decoration: BoxDecoration(
-                border: Border.all(color: Color(0xffF1F1F5)),
+                border: Border.all(color: const Color(0xffF1F1F5)),
                 shape: BoxShape.circle,
               ),
               child: SvgPicture.asset(Assets.assetsImagesBackIcon),
             ),
           ),
         ),
-        Spacer(),
+        const Spacer(),
         Text(text, style: Styles.bold19),
-        Spacer(),
-        SizedBox(width: 16 + 55),
+        const Spacer(),
+        const SizedBox(width: 16 + 55),
       ],
     );
   }

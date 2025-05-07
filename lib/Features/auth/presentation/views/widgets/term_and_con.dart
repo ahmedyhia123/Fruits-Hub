@@ -4,7 +4,8 @@ import 'package:fruits_hub/Core/utils/constants.dart';
 import 'package:fruits_hub/Core/utils/styles.dart';
 
 class TermAndCon extends StatefulWidget {
-  const TermAndCon({super.key});
+  const TermAndCon({super.key, required this.onChanged});
+  final ValueChanged<bool> onChanged;
 
   @override
   State<TermAndCon> createState() => _TermAndConState();
@@ -17,12 +18,13 @@ class _TermAndConState extends State<TermAndCon> {
     return Row(
       children: [
         Transform.translate(
-          offset: Offset(14, -6),
+          offset: const Offset(14, -6),
           child: Transform.scale(
             scale: 1.5,
             child: Checkbox(
               checkColor: Colors.white,
-              side: BorderSide(color: Color(0xff949D9E).withOpacity(0.5)),
+              // ignore: deprecated_member_use
+              side: BorderSide(color: const Color(0xff949D9E).withOpacity(0.5)),
               activeColor: AppColors.primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(
@@ -31,6 +33,7 @@ class _TermAndConState extends State<TermAndCon> {
               ),
               value: chkBox,
               onChanged: (value) {
+                widget.onChanged(value!);
                 chkBox = !chkBox;
                 setState(() {});
               },
@@ -46,7 +49,7 @@ class _TermAndConState extends State<TermAndCon> {
               children: [
                 TextSpan(
                   text: 'من خلال إنشاء حساب ، فإنك توافق على ',
-                  style: Styles.semiBold16.copyWith(color: Color(0xff949D9E)),
+                  style: Styles.semiBold16.copyWith(color: const Color(0xff949D9E)),
                 ),
                 TextSpan(
                   text: 'الشروط والأحكام الخاصة بنا',

@@ -19,9 +19,8 @@ class LoginByWidget extends StatelessWidget {
       child: Container(
         height: 60,
         decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          border: Border.all(color: Color(0xffDDDFDF)),
-          borderRadius: BorderRadius.all(Radius.circular(16)),
+          border: Border.all(color: const Color(0xffDDDFDF)),
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
         ),
         child: ListTile(
           leading: SvgPicture.asset(logo, height: 24),

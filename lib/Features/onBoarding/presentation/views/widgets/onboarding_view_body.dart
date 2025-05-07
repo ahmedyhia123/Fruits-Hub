@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fruits_hub/Core/services/Shared_preference.dart';
+import 'package:fruits_hub/Core/services/shared_preference.dart';
 import 'package:fruits_hub/Core/utils/constants.dart';
 import 'package:fruits_hub/Core/widgets/custom_button.dart';
 import 'package:fruits_hub/Features/auth/presentation/views/login_view.dart';
@@ -44,13 +44,13 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
         DotsIndicator(
           dotsCount: 2,
           decorator: DotsDecorator(
-            activeColor: Color(0xff1B5E37),
-            activeSize: Size(11, 11),
-            size: currentPage == 1 ? Size(11, 11) : Size(9, 9),
+            activeColor: const Color(0xff1B5E37),
+            activeSize: const Size(11, 11),
+            size: currentPage == 1 ? const Size(11, 11) : const Size(9, 9),
             color:
                 currentPage == 1
-                    ? Color(0xff1B5E37)
-                    : Color(0xff5DB957).withOpacity(0.5),
+                    ? const Color(0xff1B5E37)
+                    : const Color(0xff5DB957).withOpacity(0.5),
           ),
         ),
         const SizedBox(height: 32),
@@ -67,7 +67,7 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
                 },
               ),
             )
-            : SizedBox(height: 55),
+            : const SizedBox(height: 55),
         const SizedBox(height: 45),
       ],
     );

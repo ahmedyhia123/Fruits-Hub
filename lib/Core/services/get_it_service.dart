@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:fruits_hub/Core/services/firebase_auth_service.dart';
 import 'package:fruits_hub/Features/auth/data/repos/auth_repo_impl.dart';
 import 'package:fruits_hub/Features/auth/domain/repo/auth_repo.dart';

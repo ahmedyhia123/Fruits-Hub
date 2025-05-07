@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_hub/Core/utils/app_colors.dart';
@@ -19,6 +18,7 @@ class SignupViewBody extends StatefulWidget {
 class _SignupViewBodyState extends State<SignupViewBody> {
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   AutovalidateMode validator = AutovalidateMode.disabled;
+  late bool isTermsAccepted = false;
   @override
   Widget build(BuildContext context) {
     late String name, email, password;
@@ -36,41 +36,89 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                   Navigator.pop(context);
                 },
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               CustomFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'هذا الحقل مطلوب';
+                  } else {
+                    return null;
+                  }
+                },
                 text: 'الاسم كامل',
                 onSaved: (p0) {
                   name = p0!;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               CustomFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'من فضلك ادخل الايميل';
+                  }
+
+                  
+                  final emailRegex = RegExp(
+                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                  );
+                  if (!emailRegex.hasMatch(value)) {
+                    return 'من فضلك ادخل ايميل صحيح';
+                  }
+
+                  return null;
+                },
                 text: 'البريد الإلكتروني',
                 onSaved: (p0) {
                   email = p0!;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               CustomFormField(
+                validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'من فضلك ادخل الباسورد';
+                    }
+                    if (value.length < 6) {
+                      return 'الرقم السري يجب ان لا يقل عن 6 احرف';
+                    }
+
+                    return null;
+                  },
                 text: 'كلمة المرور',
                 isPassword: true,
                 onSaved: (p0) {
                   password = p0!;
                 },
               ),
-              SizedBox(height: 16),
-              TermAndCon(),
-              SizedBox(height: 30),
+              const SizedBox(height: 16),
+              TermAndCon(
+                onChanged: (value) {
+                  isTermsAccepted = value;
+                },
+              ),
+              const SizedBox(height: 30),
               CustomButton(
                 text: 'إنشاء حساب جديد',
                 onPressed: () {
                   if (key.currentState!.validate()) {
                     key.currentState!.save();
-                    context.read<SignupCubit>().createUserWithEmailAndPassword(
-                      email: email,
-                      password: password,
-                      name: name,
-                    );
+                    if (isTermsAccepted) {
+                      context
+                          .read<SignupCubit>()
+                          .createUserWithEmailAndPassword(
+                            email: email,
+                            password: password,
+                            name: name,
+                          );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'يجب عليك الموافقة علي الشروط والاحكام ',
+                          ),
+                        ),
+                      );
+                    }
                   } else {
                     setState(() {
                       validator = AutovalidateMode.always;
@@ -78,13 +126,15 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                   }
                 },
               ),
-              SizedBox(height: 26),
+              const SizedBox(height: 26),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'تمتلك حساب بالفعل؟',
-                    style: Styles.semiBold19.copyWith(color: Color(0xff949D9E)),
+                    style: Styles.semiBold19.copyWith(
+                      color: const Color(0xff949D9E),
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {

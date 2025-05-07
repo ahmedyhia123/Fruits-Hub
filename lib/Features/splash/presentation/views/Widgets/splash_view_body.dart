@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fruits_hub/Core/services/Shared_preference.dart';
+import 'package:fruits_hub/Core/services/shared_preference.dart';
 import 'package:fruits_hub/Core/utils/app_images.dart';
 import 'package:fruits_hub/Core/utils/constants.dart';
 import 'package:fruits_hub/Features/auth/presentation/views/login_view.dart';

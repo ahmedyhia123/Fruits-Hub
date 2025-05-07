@@ -6,16 +6,16 @@ class AoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       children: [
-        Expanded(
+         Expanded(
           child: Divider(
             color: Color(0xffDDDFDF), // لون الخط الخفيف
             thickness: 1, // سمك الخط
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(' أو ', style: Styles.bold19),
         ),
         Expanded(child: Divider(color: Color(0xffDDDFDF), thickness: 1)),

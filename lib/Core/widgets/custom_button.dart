@@ -15,7 +15,7 @@ class CustomButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),
-          backgroundColor: Color(0xff1B5E37),
+          backgroundColor: const Color(0xff1B5E37),
         ),
         onPressed: onPressed,
         child: Text(text, style: Styles.bold19.copyWith(color: Colors.white)),

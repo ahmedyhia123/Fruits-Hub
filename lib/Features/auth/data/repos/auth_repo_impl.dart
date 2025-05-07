@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:dartz/dartz.dart';
 import 'package:fruits_hub/Core/errors/Failure.dart';
 import 'package:fruits_hub/Core/errors/excption.dart';
@@ -17,7 +19,7 @@ class AuthRepoImpl extends AuthRepo {
     String name,
   ) async {
     try {
-      var user = await _firebaseAuthService.caretUserWithEmailAndPassword(
+      final user = await _firebaseAuthService.caretUserWithEmailAndPassword(
         email,
         password,
       );
@@ -25,9 +27,46 @@ class AuthRepoImpl extends AuthRepo {
     } on CustomException catch (e) {
       return Left(ServerFailure(e.message));
     } catch (e) {
-      return Left(
-        ServerFailure('حدث غطأ ما يرجو المحاولة في وقت لاحق'),
-      );
+      log(e.toString());
+      return const Left(ServerFailure('حدث غطأ ما يرجو المحاولة في وقت لاحق'));
     }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> login(
+    String email,
+    String password,
+  ) async {
+    try {
+      final user = await _firebaseAuthService.login(email, password);
+      return Right(UserModel.fromFirebaseUser(user));
+    } on CustomException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      log(e.toString());
+      return const Left(ServerFailure('حدث غطأ ما يرجو المحاولة في وقت لاحق'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> loginWithGoogle() async {
+    try {
+      final user = await _firebaseAuthService.loginWithGoogle();
+      return Right(UserModel.fromFirebaseUser(user));
+    } catch (e) {
+      log(e.toString());
+      return const Left(ServerFailure('حدث غطأ ما يرجو المحاولة في وقت لاحق'));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, UserEntity>> loginWithFacebook() async {
+    try {
+  final user = await _firebaseAuthService.loginWithFacebook();
+    return Right(UserModel.fromFirebaseUser(user));
+}  catch (e) {
+  log(e.toString());
+      return const Left(ServerFailure('حدث غطأ ما يرجو المحاولة في وقت لاحق'));
+}
   }
 }
