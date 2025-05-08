@@ -87,4 +87,9 @@ class FirebaseAuthService {
     // Once signed in, return the UserCredential
     return (await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential)).user!;
   }
+
+  Future deleteUser() async {
+    await _instance.currentUser?.delete();
+    
+  }
 }

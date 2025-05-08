@@ -1,3 +1,3 @@
 abstract class DataBaseService {
-  Future<void> addData(String collection, Map<String, dynamic> data);
+  Future<void> addData({required String collection, required Map<String, dynamic> data});
 }
