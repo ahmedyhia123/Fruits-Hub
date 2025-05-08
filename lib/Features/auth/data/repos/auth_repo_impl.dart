@@ -29,22 +29,23 @@ class AuthRepoImpl extends AuthRepo {
         email,
         password,
       );
-      var userEntity = UserModel.fromFirebaseUser(user);
+      var userEntity = UserEntity(uid: user.uid, email: email, name: name);
 
-      userEntity.name = name;
       await addUserData(user: userEntity);
       return Right(userEntity);
     } on CustomException catch (e) {
-      if (user != null) {
-        await _firebaseAuthService.deleteUser();
-      }
+      await deleteUser(user);
       return Left(ServerFailure(e.message));
     } catch (e) {
-      if (user != null) {
-        await _firebaseAuthService.deleteUser();
-      }
+      await deleteUser(user);
       log(e.toString());
       return const Left(ServerFailure('حدث غطأ ما يرجو المحاولة في وقت لاحق'));
+    }
+  }
+
+  Future<void> deleteUser(User? user) async {
+    if (user != null) {
+      await _firebaseAuthService.deleteUser();
     }
   }
 
@@ -66,10 +67,23 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<Failure, UserEntity>> loginWithGoogle() async {
+    User? user;
     try {
-      final user = await _firebaseAuthService.loginWithGoogle();
+      user = await _firebaseAuthService.loginWithGoogle();
+      final UserEntity userEntity = UserEntity(
+        uid: user.uid,
+        email: user.email!,
+        name: user.displayName!,
+      );
+      await addUserData(user: userEntity);
       return Right(UserModel.fromFirebaseUser(user));
+    } on FirebaseAuthException catch (e) {
+      log(e.code);
+      return const Left(
+        ServerFailure('هذا الايميل مستخدم بالفعل قم بتسجيل الدخول'),
+      );
     } catch (e) {
+      await deleteUser(user);
       log(e.toString());
       return const Left(ServerFailure('حدث غطأ ما يرجو المحاولة في وقت لاحق'));
     }
@@ -77,10 +91,24 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<Failure, UserEntity>> loginWithFacebook() async {
+    User? user;
     try {
-      final user = await _firebaseAuthService.loginWithFacebook();
+      user = await _firebaseAuthService.loginWithFacebook();
+      final UserEntity userEntity = UserEntity(
+        uid: user.uid,
+        email: user.email!,
+        name: user.displayName!,
+      );
+      await addUserData(user: userEntity);
+
       return Right(UserModel.fromFirebaseUser(user));
+    } on FirebaseAuthException catch (e) {
+      log(e.code);
+      return const Left(
+        ServerFailure('هذا الايميل مستخدم بالفعل قم بتسجيل الدخول'),
+      );
     } catch (e) {
+      await deleteUser(user);
       log(e.toString());
       return const Left(ServerFailure('حدث غطأ ما يرجو المحاولة في وقت لاحق'));
     }
