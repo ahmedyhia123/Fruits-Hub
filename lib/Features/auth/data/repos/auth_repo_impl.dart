@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fruits_hub/Core/services/data_base_service.dart';
 import 'package:fruits_hub/Core/utils/backend_endpoints.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:dartz/dartz.dart';
 import 'package:fruits_hub/Core/errors/Failure.dart';
 import 'package:fruits_hub/Core/errors/excption.dart';
@@ -56,7 +55,10 @@ class AuthRepoImpl extends AuthRepo {
   ) async {
     try {
       final user = await _firebaseAuthService.login(email, password);
-      return Right(UserModel.fromFirebaseUser(user));
+
+      final userEntity = await readUserData(uid: user.uid);
+
+      return Right(userEntity);
     } on CustomException catch (e) {
       return Left(ServerFailure(e.message));
     } catch (e) {
@@ -75,13 +77,29 @@ class AuthRepoImpl extends AuthRepo {
         email: user.email!,
         name: user.displayName!,
       );
-      await addUserData(user: userEntity);
+      
+      var isUserExist = await _dataBaseService.checkIfDataExists(
+        uid: user.uid,
+        collection: BackendEndpoints.usersCollection,
+      );
+      if (isUserExist){
+        await readUserData(uid: user.uid);
+      }else{
+        await addUserData(user: userEntity);
+      }
+
       return Right(UserModel.fromFirebaseUser(user));
     } on FirebaseAuthException catch (e) {
       log(e.code);
-      return const Left(
-        ServerFailure('هذا الايميل مستخدم بالفعل قم بتسجيل الدخول'),
-      );
+      if (e.code == 'account-exists-with-different-credential') {
+        return const Left(
+          ServerFailure('هذا الايميل مستخدم بالفعل قم بتسجيل الدخول'),
+        );
+      } else {
+        return const Left(
+          ServerFailure('حدث غطاء ما يرجو المحاولة في وقت لاحق'),
+        );
+      }
     } catch (e) {
       await deleteUser(user);
       log(e.toString());
@@ -99,14 +117,28 @@ class AuthRepoImpl extends AuthRepo {
         email: user.email!,
         name: user.displayName!,
       );
-      await addUserData(user: userEntity);
+      var isUserExist = await _dataBaseService.checkIfDataExists(
+        uid: user.uid,
+        collection: BackendEndpoints.usersCollection,
+      );
+      if (isUserExist){
+        await readUserData(uid: user.uid);
+      }else{
+        await addUserData(user: userEntity);
+      }
 
       return Right(UserModel.fromFirebaseUser(user));
     } on FirebaseAuthException catch (e) {
       log(e.code);
-      return const Left(
-        ServerFailure('هذا الايميل مستخدم بالفعل قم بتسجيل الدخول'),
-      );
+      if (e.code == 'account-exists-with-different-credential') {
+        return const Left(
+          ServerFailure('هذا الايميل مستخدم بالفعل قم بتسجيل الدخول'),
+        );
+      } else {
+        return const Left(
+          ServerFailure('حدث غطاء ما يرجو المحاولة في وقت لاحق'),
+        );
+      }
     } catch (e) {
       await deleteUser(user);
       log(e.toString());
@@ -119,6 +151,16 @@ class AuthRepoImpl extends AuthRepo {
     await _dataBaseService.addData(
       collection: BackendEndpoints.usersCollection,
       data: user.toMap(),
+      uid: user.uid,
     );
+  }
+
+  @override
+  Future<UserEntity> readUserData({required String uid}) async {
+    final user = await _dataBaseService.getData(
+      uid: uid,
+      collection: BackendEndpoints.usersCollection,
+    );
+    return UserModel.fromDataBase(user);
   }
 }
