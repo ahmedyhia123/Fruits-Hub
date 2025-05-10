@@ -9,6 +9,11 @@ class Assets {
   /// Assets for assetsImagesBackIcon
   /// assets/images/back_icon.svg
   static const String assetsImagesBackIcon = "assets/images/back_icon.svg";
+  static const String assetsImagesSettingIcon = "assets/images/setting.svg";
+  static const String assetsImagesUserImage = "assets/images/user_image.png";
+  static const String assetsImagesSearchIcon = "assets/images/search.svg";
+  static const String assetsImagesNotificationIcon =
+      "assets/images/notification.svg";
 
   /// Assets for assetsImagesCircles
   /// assets/images/Circles.svg
