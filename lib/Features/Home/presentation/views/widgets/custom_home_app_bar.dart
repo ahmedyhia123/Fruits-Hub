@@ -9,6 +9,7 @@ class CustomHomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.all(0),
       trailing: CircleAvatar(
         radius: 32,
         backgroundColor:const Color(0xffEEF8ED),

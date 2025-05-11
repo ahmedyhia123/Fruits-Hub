@@ -6,18 +6,15 @@ class MostSelling extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 17),
-      child: Row(
-        children: [
-          const Text('الأكثر مبيعًا', style: Styles.bold19),
-          const Spacer(),
-          Text(
-            'المزيد',
-            style: Styles.semiBold16.copyWith(color: const Color(0xff949D9E)),
-          ),
-        ],
-      ),
+    return Row(
+      children: [
+        const Text('الأكثر مبيعًا', style: Styles.bold19),
+        const Spacer(),
+        Text(
+          'المزيد',
+          style: Styles.semiBold16.copyWith(color: const Color(0xff949D9E)),
+        ),
+      ],
     );
   }
 }
