@@ -12,6 +12,8 @@ class Assets {
   static const String assetsImagesSettingIcon = "assets/images/setting.svg";
   static const String assetsImagesUserImage = "assets/images/user_image.png";
   static const String assetsImagesSearchIcon = "assets/images/search.svg";
+  static const String assetsImagesWatermelon = "assets/images/watermelon.png";
+  static const String assetsImagesShapGreean = "assets/images/shap_greean.svg";
   static const String assetsImagesNotificationIcon =
       "assets/images/notification.svg";
 

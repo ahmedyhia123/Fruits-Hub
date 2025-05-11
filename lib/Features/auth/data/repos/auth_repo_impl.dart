@@ -28,7 +28,7 @@ class AuthRepoImpl extends AuthRepo {
         email,
         password,
       );
-      var userEntity = UserEntity(uid: user.uid, email: email, name: name);
+      final userEntity = UserEntity(uid: user.uid, email: email, name: name);
 
       await addUserData(user: userEntity);
       return Right(userEntity);
@@ -78,7 +78,7 @@ class AuthRepoImpl extends AuthRepo {
         name: user.displayName!,
       );
       
-      var isUserExist = await _dataBaseService.checkIfDataExists(
+      final isUserExist = await _dataBaseService.checkIfDataExists(
         uid: user.uid,
         collection: BackendEndpoints.usersCollection,
       );
@@ -117,7 +117,7 @@ class AuthRepoImpl extends AuthRepo {
         email: user.email!,
         name: user.displayName!,
       );
-      var isUserExist = await _dataBaseService.checkIfDataExists(
+      final isUserExist = await _dataBaseService.checkIfDataExists(
         uid: user.uid,
         collection: BackendEndpoints.usersCollection,
       );
