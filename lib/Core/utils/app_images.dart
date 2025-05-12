@@ -14,6 +14,14 @@ class Assets {
   static const String assetsImagesSearchIcon = "assets/images/search.svg";
   static const String assetsImagesWatermelon = "assets/images/watermelon.png";
   static const String assetsImagesShapGreean = "assets/images/shap_greean.svg";
+  static const String assetsImagesHomeBnb = "assets/images/home_bnb.svg";
+  static const String assetsImagesProuctsBnb = "assets/images/products_bnb.svg";
+  static const String assetsImagesCartBnb = "assets/images/cart_bnb.svg";
+  static const String assetsImagesUserBnb = "assets/images/user_bnb.svg";
+  static const String assetsImagesHomeBnbBold = "assets/images/home_bnb_bold.svg";
+  static const String assetsImagesProuctsBnbBold = "assets/images/products_bnb_bold.svg";
+  static const String assetsImagesCartBnbBold = "assets/images/cart_bnb_bold.svg";
+  static const String assetsImagesUserBnbBold = "assets/images/user_bnb_bold.svg";
   static const String assetsImagesNotificationIcon =
       "assets/images/notification.svg";
 
