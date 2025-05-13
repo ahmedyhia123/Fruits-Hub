@@ -25,7 +25,7 @@ List<BottomNavgationBarEntite> bottomNavgationBarEntites = [
   BottomNavgationBarEntite(
     inActiveItem: Assets.assetsImagesCartBnb,
     activeItem: Assets.assetsImagesCartBnbBold,
-    name: 'Cart',
+    name: 'السلة',
   ),
   BottomNavgationBarEntite(
     inActiveItem: Assets.assetsImagesUserBnb,

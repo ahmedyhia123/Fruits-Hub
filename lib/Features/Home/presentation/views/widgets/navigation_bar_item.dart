@@ -15,7 +15,7 @@ class NavigationBarItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isActive
-        ? ActiveItem(iconPath: icon.activeItem)
+        ? ActiveItem(iconPath: icon.activeItem , title: icon.name,)
         : InActiveItem(iconPath: icon.inActiveItem);
   }
 }

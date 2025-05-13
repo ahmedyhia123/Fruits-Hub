@@ -39,8 +39,9 @@ class FeaturedItem extends StatelessWidget {
                 child: Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Spacer(),
+                      
                       Text(
                         
                         'عروض العيد',
@@ -57,7 +58,7 @@ class FeaturedItem extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       const FeaturedBottom(text: 'تسوق الان'),
-                      const SizedBox(height: 40),
+                      
                     ],
                   ),
                 ),
