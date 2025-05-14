@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:fruits_hub/Features/Home/presentation/views/domin/entites/bottom_navgation_bar_entite.dart';
@@ -46,9 +45,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               setState(() {
                 
               });
-              log(
-                'icon ${bottomNavgationBarEntites[index].name} clicked \n current index $currentIndex',
-              );
+              
             },
             child: NavigationBarItem(
               isActive: currentIndex == index,
