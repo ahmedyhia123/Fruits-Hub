@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fruits_hub/Core/services/data_base_service.dart';
+import 'package:fruits_hub/Core/services/shared_preference.dart';
 import 'package:fruits_hub/Core/utils/backend_endpoints.dart';
 import 'package:dartz/dartz.dart';
 import 'package:fruits_hub/Core/errors/Failure.dart';
@@ -57,6 +59,7 @@ class AuthRepoImpl extends AuthRepo {
       final user = await _firebaseAuthService.login(email, password);
 
       final userEntity = await readUserData(uid: user.uid);
+      await saveUserData(user: userEntity);
 
       return Right(userEntity);
     } on CustomException catch (e) {
@@ -77,14 +80,14 @@ class AuthRepoImpl extends AuthRepo {
         email: user.email!,
         name: user.displayName!,
       );
-      
+
       final isUserExist = await _dataBaseService.checkIfDataExists(
         uid: user.uid,
         collection: BackendEndpoints.usersCollection,
       );
-      if (isUserExist){
+      if (isUserExist) {
         await readUserData(uid: user.uid);
-      }else{
+      } else {
         await addUserData(user: userEntity);
       }
 
@@ -121,9 +124,9 @@ class AuthRepoImpl extends AuthRepo {
         uid: user.uid,
         collection: BackendEndpoints.usersCollection,
       );
-      if (isUserExist){
+      if (isUserExist) {
         await readUserData(uid: user.uid);
-      }else{
+      } else {
         await addUserData(user: userEntity);
       }
 
@@ -150,7 +153,7 @@ class AuthRepoImpl extends AuthRepo {
   Future addUserData({required UserEntity user}) async {
     await _dataBaseService.addData(
       collection: BackendEndpoints.usersCollection,
-      data: user.toMap(),
+      data: UserModel.fromEntity(user).toMap(),
       uid: user.uid,
     );
   }
@@ -162,5 +165,12 @@ class AuthRepoImpl extends AuthRepo {
       collection: BackendEndpoints.usersCollection,
     );
     return UserModel.fromDataBase(user);
+  }
+
+  @override
+  Future saveUserData({required UserEntity user}) async {
+    final jsonData = jsonEncode(UserModel.fromEntity(user).toMap());
+
+    await SharedPreferenceHelper.setString('user', jsonData);
   }
 }
